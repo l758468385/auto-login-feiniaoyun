@@ -47,7 +47,7 @@ const handleChecked = () => {
 const confirmClick = () => {
   return new Promise((resolve, reject) => {
     confirmTimer = setInterval(() => {
-      submitBtn = document.getElementsByClassName('btn btn-block btn-hero-primary')[0]
+      submitBtn = document.getElementsByClassName('btn btn-block btn-primary font-w400')[0]
       if (submitBtn) {
         submitBtn.click()
         clearInterval(confirmTimer)
@@ -60,7 +60,7 @@ const confirmClick = () => {
 const hadnleSubscribe = () => {
   return new Promise((resolve, reject) => {
     subscribeTimer = setInterval(() => {
-      subscribeBtn = document.getElementsByClassName('btn btn-sm btn-primary btn-rounded px-3 mr-1 my-1 ant-dropdown-trigger')[0]
+      subscribeBtn = document.getElementsByClassName('v2board-shortcuts-item')[1]
       if (subscribeBtn) {
         for (const key in subscribeBtn) {
           if (subscribeBtn.hasOwnProperty(key)) {
@@ -79,7 +79,7 @@ const hadnleSubscribe = () => {
 const handleCopy = () => {
   return new Promise((resolve, reject) => {
     copyTimer = setInterval(() => {
-      copyBtn = document.getElementsByClassName('ant-dropdown-menu-item')[0]
+      copyBtn = document.getElementsByClassName('item___yrtOv subsrcibe-for-link')[0]
       if (copyBtn) {
         for (const key in copyBtn) {
           if (copyBtn.hasOwnProperty(key)) {
