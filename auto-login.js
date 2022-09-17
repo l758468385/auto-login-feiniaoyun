@@ -10,6 +10,18 @@ let subscribeTimer = null
 let copyBtn = null
 let copyTimer = null
 
+// 取消弹窗
+let mask = null
+
+let timer = setInterval(() => {
+  mask = document.getElementsByClassName('ant-modal-root')[1]
+  console.log(mask)
+  if (mask) {
+    mask.style.display = 'none'
+    clearInterval(timer)
+  }
+})
+
 const register = () => {
   return new Promise((resolve, reject) => {
     registerTimer = setInterval(() => {
@@ -17,7 +29,9 @@ const register = () => {
       if (inputs.length >= 4) {
         clearInterval(registerTimer)
         for (let i = 0; i < inputs.length; i++) {
-          i == 0 ? inputs[i].value = Math.round(Math.random() * 10000000000) : inputs[i].value = password
+          i == 0
+            ? (inputs[i].value = Math.round(Math.random() * 10000000000))
+            : (inputs[i].value = password)
         }
         resolve('表单填写成功')
       }
@@ -40,27 +54,31 @@ const handleChecked = () => {
         }
         resolve('确认')
       }
-    }, 200);
+    }, 200)
   })
 }
 
 const confirmClick = () => {
   return new Promise((resolve, reject) => {
     confirmTimer = setInterval(() => {
-      submitBtn = document.getElementsByClassName('btn btn-block btn-primary font-w400')[0]
+      submitBtn = document.getElementsByClassName(
+        'btn btn-block btn-primary font-w400'
+      )[0]
       if (submitBtn) {
         submitBtn.click()
         clearInterval(confirmTimer)
         resolve('点击注册')
       }
-    }, 200);
+    }, 200)
   })
 }
 
 const hadnleSubscribe = () => {
   return new Promise((resolve, reject) => {
     subscribeTimer = setInterval(() => {
-      subscribeBtn = document.getElementsByClassName('v2board-shortcuts-item')[1]
+      subscribeBtn = document.getElementsByClassName(
+        'v2board-shortcuts-item'
+      )[1]
       if (subscribeBtn) {
         for (const key in subscribeBtn) {
           if (subscribeBtn.hasOwnProperty(key)) {
@@ -72,14 +90,16 @@ const hadnleSubscribe = () => {
         clearInterval(subscribeTimer)
         resolve('点击订阅')
       }
-    }, 200);
+    }, 200)
   })
 }
 
 const handleCopy = () => {
   return new Promise((resolve, reject) => {
     copyTimer = setInterval(() => {
-      copyBtn = document.getElementsByClassName('item___yrtOv subsrcibe-for-link')[0]
+      copyBtn = document.getElementsByClassName(
+        'item___yrtOv subsrcibe-for-link'
+      )[0]
       if (copyBtn) {
         for (const key in copyBtn) {
           if (copyBtn.hasOwnProperty(key)) {
@@ -91,7 +111,7 @@ const handleCopy = () => {
         clearInterval(copyTimer)
         resolve('拷贝完成')
       }
-    }, 200);
+    }, 200)
   })
 }
 
@@ -104,5 +124,3 @@ register().then(() => {
     })
   })
 })
-
-
