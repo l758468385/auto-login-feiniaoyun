@@ -1,14 +1,18 @@
-var password = Math.round(Math.random() * 10000000000)
+const password = Math.round(Math.random() * 10000000000)
+const email = Math.round(Math.random() * 10000000000)
 let inputs = []
 let checkInstance = null
+
 let registerTimer = null
 let checkTimer = null
 let confirmTimer = null
-let submitBtn = null
-let subscribeBtn = null
 let subscribeTimer = null
 let copyBtn = null
 let copyTimer = null
+let loginTimer = null
+
+let submitBtn = null
+let subscribeBtn = null
 
 // 取消弹窗
 let mask = null
@@ -22,24 +26,22 @@ let timer = setInterval(() => {
   }
 })
 
-const register = () => {
+const register = async () => {
   return new Promise((resolve, reject) => {
     registerTimer = setInterval(() => {
       inputs = document.getElementsByClassName('form-control form-control-alt')
       if (inputs.length >= 4) {
         clearInterval(registerTimer)
         for (let i = 0; i < inputs.length; i++) {
-          i == 0
-            ? (inputs[i].value = Math.round(Math.random() * 10000000000))
-            : (inputs[i].value = password)
+          i == 0 ? (inputs[i].value = email) : (inputs[i].value = password)
         }
-        resolve('表单填写成功')
+        resolve({ email, password })
       }
     }, 200)
   })
 }
 
-const handleChecked = () => {
+const handleChecked = async () => {
   return new Promise((resolve, reject) => {
     checkTimer = setInterval(() => {
       checkInstance = document.getElementsByClassName('custom-control-input')[0]
@@ -52,13 +54,13 @@ const handleChecked = () => {
             }
           }
         }
-        resolve('确认')
+        resolve('勾选√')
       }
     }, 200)
   })
 }
 
-const confirmClick = () => {
+const confirmClick = async () => {
   return new Promise((resolve, reject) => {
     confirmTimer = setInterval(() => {
       submitBtn = document.getElementsByClassName(
@@ -73,7 +75,33 @@ const confirmClick = () => {
   })
 }
 
-const hadnleSubscribe = () => {
+//  登录
+const handleLogin = async () => {
+  return new Promise((resolve, reject) => {
+    loginTimer = setInterval(() => {
+      submitBtn = document.getElementsByClassName(
+        'btn btn-block btn-primary font-w400'
+      )[0]
+      if (submitBtn) {
+        inputs = document.getElementsByClassName(
+          'form-control form-control-alt'
+        )
+        if (inputs.length >= 2) {
+          clearInterval(registerTimer)
+          for (let i = 0; i < inputs.length; i++) {
+            i == 0 ? (inputs[i].value = email +'@qq.com') : (inputs[i].value = password)
+          }
+        }
+
+        submitBtn.click()
+        clearInterval(confirmTimer)
+        resolve('点击登录')
+      }
+    }, 200)
+  })
+}
+
+const handleSubscribe = async () => {
   return new Promise((resolve, reject) => {
     subscribeTimer = setInterval(() => {
       subscribeBtn = document.getElementsByClassName(
@@ -94,7 +122,7 @@ const hadnleSubscribe = () => {
   })
 }
 
-const handleCopy = () => {
+const handleCopy = async () => {
   return new Promise((resolve, reject) => {
     copyTimer = setInterval(() => {
       copyBtn = document.getElementsByClassName(
@@ -114,13 +142,9 @@ const handleCopy = () => {
     }, 200)
   })
 }
-
-register().then(() => {
-  handleChecked().then(() => {
-    confirmClick().then(() => {
-      hadnleSubscribe().then(() => {
-        handleCopy()
-      })
-    })
-  })
-})
+await register()
+await handleChecked()
+await confirmClick() // 注册成功
+await handleLogin()
+await handleSubscribe()
+await handleCopy()
